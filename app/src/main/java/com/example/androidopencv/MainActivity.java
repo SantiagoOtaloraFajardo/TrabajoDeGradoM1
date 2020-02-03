@@ -13,6 +13,7 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.core.Size;
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
@@ -53,20 +54,9 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         Mat frame = inputFrame.rgba();
-
-        if (counter % 2 == 0){
-
-            Core.flip(frame, frame, 1);
-            Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2GRAY);
-
-
-        }
-
-        counter = counter + 1;
-
-
-
-
+        Imgproc.cvtColor(frame,frame, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.adaptiveThreshold(frame,frame,170,1,0,3,0);
+        Imgproc.GaussianBlur(frame,frame,new Size(3,3),0);
 
 
         return frame;
