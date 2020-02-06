@@ -11,7 +11,9 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.core.Size;
 
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
+    Mat src, dst;
+    Scalar verdeOscuro, rojoOscuro, verdeClaro, rojoClaro;
     int counter = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +32,11 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         cameraBridgeViewBase = (JavaCameraView)findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener(this);
-
-
+        //Oscuro = componente bajo y Claro = componente alto
+        verdeOscuro= new Scalar(25,51,25);
+        verdeClaro= new Scalar(229,255,229);
+        rojoOscuro= new Scalar(51,25,25);
+        rojoClaro= new Scalar(255,229,229);
         //System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         baseLoaderCallback = new BaseLoaderCallback(this) {
             @Override
@@ -53,18 +60,19 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        Mat frame = inputFrame.rgba();
-        Imgproc.cvtColor(frame,frame, Imgproc.COLOR_BGR2GRAY);
-        Imgproc.adaptiveThreshold(frame,frame,170,1,0,3,0);
-        Imgproc.GaussianBlur(frame,frame,new Size(3,3),0);
-
-
+        Mat frame = detectarColor(inputFrame);
         return frame;
     }
-
+    private Mat detectarColor(CameraBridgeViewBase.CvCameraViewFrame inputFrame)
+    {
+        Imgproc.cvtColor(inputFrame.rgba(),src,Imgproc.COLOR_BGR2HSV);
+        Core.inRange(src,verdeOscuro,verdeClaro,dst);
+        return dst;
+    }
     @Override
     public void onCameraViewStarted(int width, int height) {
-
+        src = new Mat(width,height, CvType.CV_16UC4);
+        dst = new Mat(width,height, CvType.CV_16UC4);
     }
 
     @Override
