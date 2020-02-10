@@ -12,22 +12,22 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-<<<<<<< HEAD
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-=======
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.core.CvType;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.io.*;
+import org.jgrapht.traverse.*;
 import static org.opencv.imgproc.Imgproc.cvtColor;
->>>>>>> origin/Segmentación
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         Mat frame;
         frame=inputFrame.rgba();
+
+
         return frame;
     }
     private Mat detectarColor(CameraBridgeViewBase.CvCameraViewFrame inputFrame)
