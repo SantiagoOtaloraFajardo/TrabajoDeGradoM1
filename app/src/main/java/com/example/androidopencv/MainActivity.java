@@ -12,10 +12,8 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-<<<<<<< HEAD
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-=======
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
@@ -27,7 +25,6 @@ import java.util.List;
 import java.util.Random;
 
 import static org.opencv.imgproc.Imgproc.cvtColor;
->>>>>>> origin/Segmentación
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
