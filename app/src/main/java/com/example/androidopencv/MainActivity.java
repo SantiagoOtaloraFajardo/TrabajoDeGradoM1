@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        Mat frameDetectarColor = detectarColor(inputFrame);
+        Mat frameDetectarColor = inputFrame.rgba();
         return frameDetectarColor;
     }
     private Mat detectarColor(CameraBridgeViewBase.CvCameraViewFrame inputFrame)
