@@ -2,7 +2,6 @@ package com.example.androidopencv;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Surface;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
@@ -15,13 +14,12 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.core.Size;
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
-    Mat src, dst;
+    Mat srcDetectarColor, dstDetectarColor;
     Scalar verdeOscuro, rojoOscuro, verdeClaro, rojoClaro;
     int counter = 0;
     @Override
@@ -60,19 +58,19 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        Mat frame = detectarColor(inputFrame);
-        return frame;
+        Mat frameDetectarColor = detectarColor(inputFrame);
+        return frameDetectarColor;
     }
     private Mat detectarColor(CameraBridgeViewBase.CvCameraViewFrame inputFrame)
     {
-        Imgproc.cvtColor(inputFrame.rgba(),src,Imgproc.COLOR_BGR2HSV);
-        Core.inRange(src,verdeOscuro,verdeClaro,dst);
-        return dst;
+        Imgproc.cvtColor(inputFrame.rgba(), srcDetectarColor,Imgproc.COLOR_BGR2HSV);
+        Core.inRange(srcDetectarColor,verdeOscuro,verdeClaro,dstDetectarColor);
+        return dstDetectarColor;
     }
     @Override
     public void onCameraViewStarted(int width, int height) {
-        src = new Mat(width,height, CvType.CV_16UC4);
-        dst = new Mat(width,height, CvType.CV_16UC4);
+        srcDetectarColor = new Mat(width,height, CvType.CV_16UC4);
+        dstDetectarColor = new Mat(width,height, CvType.CV_16UC4);
     }
 
     @Override
