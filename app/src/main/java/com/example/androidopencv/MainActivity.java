@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     BaseLoaderCallback baseLoaderCallback;
     Mat srcDetectarColor, dstDetectarColor;
     Scalar verdeOscuro, rojoOscuro, verdeClaro, rojoClaro;
+    ArrayList<Graph<Integer, DefaultEdge>> escenarios= new ArrayList<Graph<Integer, DefaultEdge>>();
     int counter = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
