@@ -1,14 +1,21 @@
 package com.example.androidopencv;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
             }
         };
+
     }
 
     @Override
@@ -227,5 +235,36 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         }
         dst.put(0, 0, dstData);
         return dst;
+    }
+
+    //----------------------------UI methods:>
+    //wrapper to invoke cam app
+    Mat baseMat;
+    static final int REQ_NOOD=1;
+    public void invokeCamera(View view){
+        Intent sendNoodsInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(sendNoodsInt.resolveActivity(getPackageManager()) != null){
+            startActivityForResult( sendNoodsInt , REQ_NOOD );
+        }
+    }
+
+    //doing thumbnail stuff for now, too sleppy
+    @Override
+    protected void onActivityResult( int REQ_COD, int RES_COD, Intent data ){
+        if ( REQ_COD == REQ_NOOD &&  RES_COD == RESULT_OK  ) {
+            Bundle extras = data.getExtras();
+            Bitmap picBM = (Bitmap) extras.get("data");
+            baseMat = new Mat(picBM.getHeight() , picBM.getWidth() , CvType.CV_32SC3);
+            Utils.bitmapToMat(picBM,baseMat);
+            cameraBridgeViewBase.enableView();
+            ImageView IV = findViewById(R.id.picZone);
+            IV.setImageBitmap(picBM);
+
+        }
+    }
+
+    //wrapper to fetch from gallery
+    public void invokeGallery(View view){
+
     }
 }
