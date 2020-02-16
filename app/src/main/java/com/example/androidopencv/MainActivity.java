@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
-    //Scalar verdeOscuro, rojoOscuro, verdeClaro, rojoClaro;
+    //Scalar verdeOscuro, verdeClaro;
     ArrayList<Graph<Integer, DefaultEdge>> escenarios= new ArrayList<Graph<Integer, DefaultEdge>>();
     int counter = 0;
     @Override

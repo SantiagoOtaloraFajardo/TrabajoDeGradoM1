@@ -15,19 +15,33 @@ import java.util.Random;
 
 //Por el momento utilizara el camara view pero esto puede cambiar mas adelante
 public class ImageTreater {
-    Mat src;
-    Mat dst;
 
 
-    public Mat detectarColor(Scalar high, Scalar low,Mat src)
+
+    private static ImageTreater instance = null;
+    protected  ImageTreater()
     {
+
+    }
+    public static ImageTreater getInstance(){
+        if(instance == null){
+            instance = new ImageTreater();
+        }
+        return instance;
+    }
+    public static Mat detectarColor(Mat src)
+    {
+        Mat dst=src;
+        Scalar low, high;
+        low= new Scalar(25,51,25);
+        high= new Scalar(229,255,229);
 
         Mat srcThresholde= src;
         Imgproc.cvtColor(src, srcThresholde,Imgproc.COLOR_BGR2HSV);
         Core.inRange(srcThresholde,low,high,dst);
         return dst;
     }
-    protected Mat segmentarVisajes(Mat frame) {
+    public static Mat segmentarVisajes(Mat frame) {
 
         Mat kernel = new Mat(3, 3, CvType.CV_32F);
         float[] kernelData = new float[(int) (kernel.total() * kernel.channels())];
