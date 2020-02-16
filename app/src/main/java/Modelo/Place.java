@@ -8,7 +8,11 @@ public class Place {
     private int id;
     private String nombre;
     private Boolean ocupado;
-
+    public Place(int id){
+        ocupado=false;
+        this.id=id;
+        nombre="";
+    }
     public Graph<SubPlace, DefaultEdge> getSubPlaces() {
         return subPlaces;
     }

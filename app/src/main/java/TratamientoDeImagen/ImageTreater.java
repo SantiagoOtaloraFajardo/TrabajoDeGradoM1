@@ -18,13 +18,8 @@ public class ImageTreater {
     Mat src;
     Mat dst;
 
-    public ImageTreater( Mat src, Mat dst) {
 
-        this.src = src;
-        this.dst = dst;
-    }
-
-    public Mat detectarColor(Scalar high, Scalar low)
+    public Mat detectarColor(Scalar high, Scalar low,Mat src)
     {
 
         Mat srcThresholde= src;
