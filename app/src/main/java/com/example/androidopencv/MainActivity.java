@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
-    //Scalar verdeOscuro, verdeClaro;
     ArrayList<Graph<Integer, DefaultEdge>> escenarios= new ArrayList<Graph<Integer, DefaultEdge>>();
     int counter = 0;
     @Override
@@ -44,13 +43,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         cameraBridgeViewBase = (JavaCameraView)findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener(this);
-        //Oscuro = componente bajo y Claro = componente alto
-        /*
-            verdeOscuro= new Scalar(25,51,25);
-            verdeClaro= new Scalar(229,255,229);
-            rojoOscuro= new Scalar(51,25,25);
-            rojoClaro= new Scalar(255,229,229);
-         */
+
         //System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         baseLoaderCallback = new BaseLoaderCallback(this) {
             @Override
