@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +29,8 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.core.CvType;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -240,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     //----------------------------UI methods:>
     //wrapper to invoke cam app
     Mat baseMat;
-    static final int REQ_NOOD=1;
+    static final int REQ_NOOD=1, REQ_GALL = 2;
     public void invokeCamera(View view){
         Intent sendNoodsInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(sendNoodsInt.resolveActivity(getPackageManager()) != null){
@@ -261,10 +266,32 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             IV.setImageBitmap(picBM);
 
         }
+        if ( REQ_COD == REQ_GALL &&  RES_COD == RESULT_OK  ) {
+            Uri selectedImage = data.getData();
+            try {
+                ImageDecoder.Source imgSrc = ImageDecoder.createSource(  getContentResolver() , selectedImage );
+                Bitmap gallBM = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                //Bitmap gallBM = ImageDecoder.decodeBitmap(imgSrc );
+                ImageView IV = findViewById(R.id.picZone);
+                IV.setImageBitmap(gallBM);
+
+                baseMat = new Mat();
+                Utils.bitmapToMat(gallBM ,baseMat );
+
+
+            } catch (IOException e) {
+                Log.i("TAG", "Some exception " + e);
+            }
+        }
     }
 
     //wrapper to fetch from gallery
+
     public void invokeGallery(View view){
+        Intent ImgPickInt = new Intent( Intent.ACTION_PICK );
+        ImgPickInt.setType("image/*");
+        startActivityForResult(ImgPickInt, REQ_GALL );
+
 
     }
 }
