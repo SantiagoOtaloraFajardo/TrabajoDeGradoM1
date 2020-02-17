@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     Mat srcDetectarColor, dstDetectarColor;
     Scalar verdeOscuro, rojoOscuro, verdeClaro, rojoClaro;
     int counter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -265,6 +266,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             ImageView IV = findViewById(R.id.picZone);
             IV.setImageBitmap(picBM);
 
+
+
         }
         if ( REQ_COD == REQ_GALL &&  RES_COD == RESULT_OK  ) {
             Uri selectedImage = data.getData();
@@ -273,10 +276,13 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 Bitmap gallBM = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                 //Bitmap gallBM = ImageDecoder.decodeBitmap(imgSrc );
                 ImageView IV = findViewById(R.id.picZone);
-                IV.setImageBitmap(gallBM);
+
+                //IV.setImageBitmap(gallBM);
 
                 baseMat = new Mat();
                 Utils.bitmapToMat(gallBM ,baseMat );
+
+                evokeMat(baseMat);
 
 
             } catch (IOException e) {
@@ -292,6 +298,15 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         ImgPickInt.setType("image/*");
         startActivityForResult(ImgPickInt, REQ_GALL );
 
+
+    }
+
+
+    public void evokeMat(Mat mat){
+        ImageView IV = findViewById(R.id.picZone);
+        Bitmap temp = Bitmap.createBitmap(mat.width(),mat.height(), Bitmap.Config.ARGB_8888 );
+        Utils.matToBitmap( mat , temp);
+        IV.setImageBitmap(temp);
 
     }
 }
