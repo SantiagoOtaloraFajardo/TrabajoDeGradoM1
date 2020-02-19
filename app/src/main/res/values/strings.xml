@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AndroidOpenCV</string>
+    <string name="takePic">Camera</string>
+    <string name="loadPc">load pic</string>
 </resources>

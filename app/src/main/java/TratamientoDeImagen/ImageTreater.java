@@ -29,12 +29,9 @@ public class ImageTreater {
         }
         return instance;
     }
-    public static Mat detectarColor(Mat src)
+    public static Mat detectarColor(Mat src,Scalar low,Scalar high)
     {
         Mat dst=src;
-        Scalar low, high;
-        low= new Scalar(25,51,25);
-        high= new Scalar(229,255,229);
 
         Mat srcThresholde= src;
         Imgproc.cvtColor(src, srcThresholde,Imgproc.COLOR_BGR2HSV);

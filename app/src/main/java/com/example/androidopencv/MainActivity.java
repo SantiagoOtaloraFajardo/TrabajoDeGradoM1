@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
-    ArrayList<Graph<Integer, DefaultEdge>> escenarios= new ArrayList<Graph<Integer, DefaultEdge>>();
     int counter = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         cameraBridgeViewBase = (JavaCameraView)findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener(this);
-
         //System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         baseLoaderCallback = new BaseLoaderCallback(this) {
             @Override
@@ -76,8 +74,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     @Override
     public void onCameraViewStarted(int width, int height) {
-        //srcDetectarColor = new Mat(width,height, CvType.CV_16UC4);
-        //dstDetectarColor = new Mat(width,height, CvType.CV_16UC4);
     }
 
     @Override
