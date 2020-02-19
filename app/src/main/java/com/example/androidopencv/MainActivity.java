@@ -288,11 +288,11 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 // sceneName, reibe el texto del nombre
                 // baseMat, mat de la img cargada
                 //data, string que debe contener e log
-                String data = sceneName;
+                String logData = sceneName;
 
                 //-----------
 
-                toOutViewLog( data );
+                toOutViewLog( logData );
                 evokeMat(baseMat);
 
 
