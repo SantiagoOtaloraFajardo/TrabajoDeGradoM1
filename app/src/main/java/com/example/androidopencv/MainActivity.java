@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -282,6 +283,16 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 baseMat = new Mat();
                 Utils.bitmapToMat(gallBM ,baseMat );
 
+                String sceneName = getSceneName();
+                //------
+                // sceneName, reibe el texto del nombre
+                // baseMat, mat de la img cargada
+                //data, string que debe contener e log
+                String data = sceneName;
+
+                //-----------
+
+                toOutViewLog( data );
                 evokeMat(baseMat);
 
 
@@ -308,5 +319,16 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         Utils.matToBitmap( mat , temp);
         IV.setImageBitmap(temp);
 
+    }
+
+    public void toOutViewLog (String logOut){ //to on screen log output
+        TextView logOutV =  findViewById(R.id.dbgOut);
+        logOutV.setText( logOut );
+
+    }
+
+    public String getSceneName(){
+        TextView nameView = findViewById( R.id.nameInp );
+        return nameView.getText().toString();
     }
 }

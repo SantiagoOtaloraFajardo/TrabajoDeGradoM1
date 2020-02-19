@@ -9,15 +9,16 @@
 
     <org.opencv.android.JavaCameraView
         android:id="@+id/CameraView"
-        android:layout_width="586dp"
-        android:layout_height="235dp"
+        android:layout_width="195dp"
+        android:layout_height="110dp"
 
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="28dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -44,17 +45,42 @@
 
     <ImageView
         android:id="@+id/picZone"
-        android:layout_width="275dp"
-        android:layout_height="116dp"
+        android:layout_width="383dp"
+        android:layout_height="231dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="336dp"
+        android:contentDescription="after proccess"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toTopOf="@+id/CameraView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.341"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/dbgOut"
+        android:layout_width="290dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="temp log"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameInp" />
+
+    <EditText
+        android:id="@+id/nameInp"
+        android:layout_width="287dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Scene name"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
