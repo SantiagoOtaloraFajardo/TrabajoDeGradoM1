@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         if ( REQ_COD == REQ_GALL &&  RES_COD == RESULT_OK  ) {
             Uri selectedImage = data.getData();
             try {
-                ImageDecoder.Source imgSrc = ImageDecoder.createSource(  getContentResolver() , selectedImage );
+                //ImageDecoder.Source imgSrc = ImageDecoder.createSource(  getContentResolver() , selectedImage );
                 Bitmap gallBM = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                 //Bitmap gallBM = ImageDecoder.decodeBitmap(imgSrc );
                 ImageView IV = findViewById(R.id.picZone);
