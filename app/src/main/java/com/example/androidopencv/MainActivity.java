@@ -283,8 +283,16 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 baseMat = new Mat();
                 Utils.bitmapToMat(gallBM ,baseMat );
 
-                toOutViewLog( getSceneName() );
+                String sceneName = getSceneName();
+                //------
+                // sceneName, reibe el texto del nombre
+                // baseMat, mat de la img cargada
+                //data, string que debe contener e log
+                String data = sceneName;
 
+                //-----------
+
+                toOutViewLog( data );
                 evokeMat(baseMat);
 
 
