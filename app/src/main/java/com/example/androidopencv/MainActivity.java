@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
-    Mat srcDetectarColor, dstDetectarColor;
-    Scalar verdeOscuro, rojoOscuro, verdeClaro, rojoClaro;
     int counter = 0;
 
     @Override
@@ -58,11 +56,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         cameraBridgeViewBase = (JavaCameraView)findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener(this);
-        //Oscuro = componente bajo y Claro = componente alto
-        verdeOscuro= new Scalar(25,51,25);
-        verdeClaro= new Scalar(229,255,229);
-        rojoOscuro= new Scalar(51,25,25);
-        rojoClaro= new Scalar(255,229,229);
         //System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         baseLoaderCallback = new BaseLoaderCallback(this) {
             @Override
@@ -82,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
             }
         };
-
     }
 
     @Override
@@ -93,16 +85,9 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
         return frame;
     }
-    private Mat detectarColor(CameraBridgeViewBase.CvCameraViewFrame inputFrame)
-    {
-        Imgproc.cvtColor(inputFrame.rgba(), srcDetectarColor,Imgproc.COLOR_BGR2HSV);
-        Core.inRange(srcDetectarColor,verdeOscuro,verdeClaro,dstDetectarColor);
-        return dstDetectarColor;
-    }
+
     @Override
     public void onCameraViewStarted(int width, int height) {
-        srcDetectarColor = new Mat(width,height, CvType.CV_16UC4);
-        dstDetectarColor = new Mat(width,height, CvType.CV_16UC4);
     }
 
     @Override
@@ -285,9 +270,9 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
                 String sceneName = getSceneName();
                 //------
-                // sceneName, reibe el texto del nombre
+                // sceneName, recibe el texto del nombre
                 // baseMat, mat de la img cargada
-                //data, string que debe contener e log
+                // logData, string contiene el texto a mostrar
                 String logData = sceneName;
 
                 //-----------
