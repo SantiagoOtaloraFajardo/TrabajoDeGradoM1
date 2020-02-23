@@ -20,6 +20,8 @@ import org.jgrapht.traverse.*;
 import org.opencv.android.Utils;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.util.Log;
+
 import java.util.*;
 import java.util.Vector;
 
@@ -143,8 +145,6 @@ public class Escenario {
     }
     public void detectarPlace(Mat src ){
         Mat bN = Mat.zeros(src.size(), CvType.CV_8U);
-        Scalar verdesHigh= new Scalar(229,255,229);
-        Scalar verdesLow= new Scalar(25,51,25);
         Scalar rojoHigh=new Scalar(255,229,229);
         Scalar rojoLow= new Scalar(51,25,25);
         double x1;
@@ -155,34 +155,35 @@ public class Escenario {
         int lineasV;
         int nodo;
         Place p;
-        src.convertTo(bN, CvType.CV_8UC1);
+        Imgproc.cvtColor(src,bN, Imgproc.COLOR_RGB2GRAY);
         Mat rojos=Mat.zeros(src.size(), CvType.CV_8U);
-        Mat verdes=Mat.zeros(src.size(), CvType.CV_8U);;
         rojos=ImageTreater.detectarColor(src,rojoLow,rojoHigh);
-        verdes=ImageTreater.detectarColor(src,verdesLow,verdesHigh);
         Mat wLocMat = Mat.zeros(rojos.size(), rojos.channels());
         Core.findNonZero(rojos, wLocMat);
+        Imgproc.adaptiveThreshold(bN, bN, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 30);
 
         for(int i=0;i<wLocMat.total();i++){
             double[] puntico=wLocMat.get(0, i);
-            //crear el de puntico2;
-            //si la diferencia entre puntico 1 y puntica 2 en x y en y es mayor a 1 crear puntico
             x1=puntico[0];
             y1=puntico[1];
+            Log.d("Largo:",""+x1);
+            Log.d("Ancho",""+y1);
             lineasV=contarLineasVerticales(bN,(int)x1,(int)y1);
             lineasH=contarLineasHorizontales(bN,(int)x1,(int)y1);
             nodo=encontrarNodo(lineasH,lineasV);
             if(nodo!=-1) {
                 p = getVertice(nodo);
+                //places.get
                 if(!p.getOcupado()) {
                     int code=asignarSubPlaces(p);
                     if(code==0){
                         p.setOcupado(true);
+                        Log.d("DetectarPlace","Se creó el place");
                     }
                 }
             }
             else{
-                //imprimir que no se ha encontrado el nodo
+                Log.d("DetectarPlace","No se pudo crear el place");
             }
 
         }
@@ -197,22 +198,30 @@ public class Escenario {
         int numLineas=0;
         int grosor=0;
         int inicio =y;
-        while(zero == src.get(x,inicio))
+        Log.d("Valor1:",""+src.get(x,inicio)[0]);
+        while(zero[0] == src.get(x,inicio)[0])
             inicio++;
         for(int i=inicio;i<src.rows();i++)
         {
-            if(zero == src.get(x,i)) {
+            Log.d("TamFilas=",""+src.rows());
+            Log.d("Posición=",""+i);
+            Log.d("Filas",""+src.get(x,i)[0]);
+            if(zero[0] == src.get(x,i)[0]) {
                 grosor++;
-                if(zero != src.get(x,i++))
+                if(zero[0] != src.get(x,i++)[0])
                     break;
             }
         }
+        Log.d("Grosor:",""+grosor);
         for (int i=inicio;i<src.rows();i++){
-            if(zero == src.get(x,i)){
+            if(zero[0] == src.get(x,i)[0]){
                 contadorVerticales++;
             }
         }
+        Log.d("ContadorVerticales:",""+contadorVerticales);
+
         numLineas=contadorVerticales/grosor;
+
         return numLineas;
     }
     public int contarLineasHorizontales(Mat src, int x, int y){
@@ -241,6 +250,7 @@ public class Escenario {
             }
 
         }
+        Log.d("Grosor",""+grosor);
         numLineas=contadorHorizontal/grosor;
         return numLineas;
     }
@@ -453,5 +463,12 @@ public class Escenario {
         }
 
         return -1;
+    }
+    public Boolean verificarDisponibilidad(Place p){
+        Set<DefaultEdge>aristas=places.edgesOf(p);
+        for (Iterator<DefaultEdge> it = aristas.iterator(); it.hasNext(); ) {
+            DefaultEdge dE = it.next();
+        }
+        return false;
     }
 }

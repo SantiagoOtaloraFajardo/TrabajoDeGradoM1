@@ -86,4 +86,5 @@ public class Place {
     public void setYmax(double ymax) {
         this.ymax = ymax;
     }
+
 }

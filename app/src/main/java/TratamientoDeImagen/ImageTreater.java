@@ -12,6 +12,7 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.lang.Math.*;
 
 //Por el momento utilizara el camara view pero esto puede cambiar mas adelante
 public class ImageTreater {
