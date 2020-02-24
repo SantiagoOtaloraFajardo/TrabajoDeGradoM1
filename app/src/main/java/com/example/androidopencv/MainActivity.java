@@ -98,12 +98,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
         return frame;
     }
-    private Mat detectarColor(CameraBridgeViewBase.CvCameraViewFrame inputFrame)
-    {
-        Imgproc.cvtColor(inputFrame.rgba(), srcDetectarColor,Imgproc.COLOR_BGR2HSV);
-        Core.inRange(srcDetectarColor,verdeOscuro,verdeClaro,dstDetectarColor);
-        return dstDetectarColor;
-    }
+
     @Override
     public void onCameraViewStarted(int width, int height) {
         srcDetectarColor = new Mat(width,height, CvType.CV_16UC4);
@@ -204,6 +199,10 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 //escenario.detectarPlace(baseMat);
                 Mat bN = Mat.zeros(baseMat.size(), CvType.CV_8U);
                 Imgproc.cvtColor(baseMat,bN, Imgproc.COLOR_RGB2GRAY);
+                //A baseMat hacerle lo de los colores
+                //Buscar donde encuentro colores primarios y antiprimarios (Negro y blanco no) y retornar el punto donde se encontraron
+                    //Recibe Mat baseMat
+                    //Retornar = ArrayList<Double[]>
                 //Imgproc.adaptiveThreshold(bN, bN, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 30);
                 Imgproc.Canny(bN, bN, 80, 200, 3);
                 Mat mRgba= new Mat();
