@@ -1,3 +1,2 @@
 include ':app', 'OpenCV-sdk-4X'
 rootProject.name='AndroidOpenCV'
-include ':openCVLibrary345'
