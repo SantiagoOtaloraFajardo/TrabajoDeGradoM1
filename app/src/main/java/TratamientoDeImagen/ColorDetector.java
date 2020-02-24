@@ -4,7 +4,31 @@ import java.util.ArrayList;
 
 public class ColorDetector {
     private ArrayList<double[]> pixelesAsignados;
-    double[] valorColor;
-    double distEuclidiana;
+    private double[] valorColor;
+    private String etiqueta;
+    private double distEuclidiana;
 
+    public ColorDetector(double[] valorColor, String etiqueta) {
+        pixelesAsignados=new ArrayList<>();
+        this.valorColor = valorColor;
+        this.etiqueta=etiqueta;
+        distEuclidiana = 0;
+    }
+
+    public ArrayList<double[]> getPixelesAsignados() {
+        return pixelesAsignados;
+    }
+
+    public String getEtiqueta() {
+        return etiqueta;
+    }
+
+    public void asignarPixel(double[] pixel) {
+        this.pixelesAsignados.add(pixel);
+    }
+
+    public double calcularDistEuclidiana(double[] valorColorSrc) {
+        distEuclidiana=Math.sqrt(Math.pow((valorColor[0]-valorColorSrc[0]),2)+Math.pow((valorColor[1]-valorColorSrc[1]),2)+Math.pow((valorColor[2]-valorColorSrc[2]),2));
+        return distEuclidiana;
+    }
 }

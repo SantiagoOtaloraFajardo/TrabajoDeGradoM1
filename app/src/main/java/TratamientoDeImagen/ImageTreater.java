@@ -1,5 +1,7 @@
 package TratamientoDeImagen;
 
+import android.graphics.Color;
+
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -20,6 +22,8 @@ public class ImageTreater {
 
 
     private static ImageTreater instance = null;
+
+
     protected  ImageTreater()
     {
 
@@ -30,14 +34,49 @@ public class ImageTreater {
         }
         return instance;
     }
-    public static Mat detectarColor(Mat src,Scalar low,Scalar high)
+    public static Mat detectarColor(Mat src)
     {
-        Mat dst=src;
-
-        Mat srcThresholde= src;
-        Imgproc.cvtColor(src, srcThresholde,Imgproc.COLOR_BGR2HSV);
-        Core.inRange(srcThresholde,low,high,dst);
-        return dst;
+        ArrayList<ColorDetector> rubicCube = new ArrayList<ColorDetector>();
+        double[] vectorRojo={255,0,0};
+        double[] vectorVerde={0,255,0};
+        double[] vectorAzul={0,0,255};
+        double[] vectorAmarillo={255,255,0};
+        double[] vectorCian={0,255,255};
+        double[] vectorMagenta={255,0,255};
+        double[] vectorNegro={0,0,0};
+        double[] vectorBlanco={255,255,255};
+        rubicCube.add(new ColorDetector(vectorRojo,"rojo"));
+        rubicCube.add(new ColorDetector(vectorVerde,"verde"));
+        rubicCube.add(new ColorDetector(vectorAzul,"azul"));
+        rubicCube.add(new ColorDetector(vectorAmarillo,"amarillo"));
+        rubicCube.add(new ColorDetector(vectorCian,"cian"));
+        rubicCube.add(new ColorDetector(vectorMagenta,"Magenta"));
+        rubicCube.add(new ColorDetector(vectorNegro,"negro"));
+        rubicCube.add(new ColorDetector(vectorBlanco,"blanco"));
+        for (int i =0; i<src.rows();i++)
+        {
+            for (int j=0;j<src.cols();i++)
+            {
+                double menor = 100000;
+                String masParecido="";
+                for(ColorDetector evaluador:rubicCube)
+                {
+                    if(evaluador.calcularDistEuclidiana(src.get(i,j))<menor)
+                    {
+                        menor= evaluador.calcularDistEuclidiana(src.get(i,j));
+                        masParecido=evaluador.getEtiqueta();
+                    }
+                }
+                for (ColorDetector ganador:rubicCube)
+                {
+                    if(ganador.getEtiqueta().equals(masParecido))
+                    {
+                        ganador.asignarPixel(src.get(i,j));
+                    }
+                }
+            }
+        }
+        return null;
     }
     public static Mat segmentarVisajes(Mat frame) {
 
