@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 String logData = sceneName;
 
                 //-----------
-
+                logData += "opencv version :: "+ Core.getVersionString() ;
                 toOutViewLog( logData );
                 evokeMat(baseMat);
 
