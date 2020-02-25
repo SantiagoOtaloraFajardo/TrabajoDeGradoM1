@@ -69,7 +69,7 @@ public class ImageTreater {
                 }
                 for (ColorDetector ganador:rubicCube)
                 {
-                    if(ganador.getEtiqueta().equals(masParecido))
+                    if(ganador.getEtiqueta().equals(masParecido)&&!masParecido.equals("negro")&&!masParecido.equals("blanco"))
                     {
                         ganador.asignarPixel(src.get(i,j));
                     }
