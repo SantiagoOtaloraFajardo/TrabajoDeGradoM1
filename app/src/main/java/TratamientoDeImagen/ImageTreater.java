@@ -34,7 +34,7 @@ public class ImageTreater {
         }
         return instance;
     }
-    public static Mat detectarColor(Mat src)
+    public static ArrayList<ColorDetector> detectarColor(Mat src)
     {
         ArrayList<ColorDetector> rubicCube = new ArrayList<ColorDetector>();
         double[] vectorRojo={255,0,0};
@@ -67,16 +67,16 @@ public class ImageTreater {
                         masParecido=evaluador.getEtiqueta();
                     }
                 }
-                for (ColorDetector ganador:rubicCube)
+                for (int k=0; k<rubicCube.size();k++)
                 {
-                    if(ganador.getEtiqueta().equals(masParecido)&&!masParecido.equals("negro")&&!masParecido.equals("blanco"))
+                    if(rubicCube.get(k).getEtiqueta().equals(masParecido)&&!masParecido.equals("negro")&&!masParecido.equals("blanco"))
                     {
-                        ganador.asignarPixel(src.get(i,j));
+                        rubicCube.get(k).asignarPixel(src.get(i,j));
                     }
                 }
             }
         }
-        return null;
+        return rubicCube;
     }
     public static Mat segmentarVisajes(Mat frame) {
 
