@@ -3,7 +3,7 @@ package TratamientoDeImagen;
 import java.util.ArrayList;
 
 public class ColorDetector {
-    private ArrayList<double[]> pixelesAsignados;
+    private ArrayList<Pixel> pixelesAsignados;
     private double[] valorColor;
     private String etiqueta;
     private double distEuclidiana;
@@ -15,7 +15,7 @@ public class ColorDetector {
         distEuclidiana = 0;
     }
 
-    public ArrayList<double[]> getPixelesAsignados() {
+    public ArrayList<Pixel> getPixelesAsignados() {
         return pixelesAsignados;
     }
 
@@ -23,7 +23,8 @@ public class ColorDetector {
         return etiqueta;
     }
 
-    public void asignarPixel(double[] pixel) {
+    public void asignarPixel(double[] valorPixel,int x, int y) {
+        Pixel pixel = new Pixel(valorPixel,x,y);
         this.pixelesAsignados.add(pixel);
     }
 

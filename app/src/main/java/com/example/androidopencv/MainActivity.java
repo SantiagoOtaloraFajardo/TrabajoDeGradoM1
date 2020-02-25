@@ -44,6 +44,8 @@ import org.jgrapht.traverse.*;
 import java.lang.Math.*;
 
 import Modelo.Escenario;
+import TratamientoDeImagen.ColorDetector;
+import TratamientoDeImagen.ImageTreater;
 
 import static org.opencv.imgproc.Imgproc.cvtColor;
 
@@ -203,6 +205,12 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 //Buscar donde encuentro colores primarios y antiprimarios (Negro y blanco no) y retornar el punto donde se encontraron
                     //Recibe Mat baseMat
                     //Retornar = ArrayList<Double[]>
+                ArrayList<ColorDetector> pixelesDeColores=new ArrayList<ColorDetector>();
+                pixelesDeColores=ImageTreater.detectarColor(baseMat);
+                for(ColorDetector aux: pixelesDeColores)
+                {
+
+                }
                 //Imgproc.adaptiveThreshold(bN, bN, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 30);
                 Imgproc.Canny(bN, bN, 80, 200, 3);
                 Mat mRgba= new Mat();

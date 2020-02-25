@@ -37,6 +37,7 @@ public class ImageTreater {
     public static ArrayList<ColorDetector> detectarColor(Mat src)
     {
         ArrayList<ColorDetector> rubicCube = new ArrayList<ColorDetector>();
+        Mat prueba = Mat.zeros(src.size(), CvType.CV_32SC3);
         double[] vectorRojo={255,0,0};
         double[] vectorVerde={0,255,0};
         double[] vectorAzul={0,0,255};
@@ -71,7 +72,8 @@ public class ImageTreater {
                 {
                     if(rubicCube.get(k).getEtiqueta().equals(masParecido)&&!masParecido.equals("negro")&&!masParecido.equals("blanco"))
                     {
-                        rubicCube.get(k).asignarPixel(src.get(i,j));
+                        rubicCube.get(k).asignarPixel(src.get(i,j),i,j);
+                        prueba.put(i,j,src.get(i,j));
                     }
                 }
             }
