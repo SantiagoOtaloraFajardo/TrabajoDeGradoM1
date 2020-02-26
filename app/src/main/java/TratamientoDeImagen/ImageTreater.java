@@ -1,6 +1,7 @@
 package TratamientoDeImagen;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.core.Core;
@@ -46,16 +47,16 @@ public class ImageTreater {
         double[] vectorNegro={0,0,0};
         double[] vectorBlanco={255,255,255};
         rubicCube.add(new ColorDetector(vectorRojo,"rojo"));
-        rubicCube.add(new ColorDetector(vectorVerde,"verde"));
-        rubicCube.add(new ColorDetector(vectorAzul,"azul"));
-        rubicCube.add(new ColorDetector(vectorAmarillo,"amarillo"));
-        rubicCube.add(new ColorDetector(vectorCian,"cian"));
-        rubicCube.add(new ColorDetector(vectorMagenta,"Magenta"));
-        rubicCube.add(new ColorDetector(vectorNegro,"negro"));
-        rubicCube.add(new ColorDetector(vectorBlanco,"blanco"));
+        //rubicCube.add(new ColorDetector(vectorVerde,"verde"));
+        //rubicCube.add(new ColorDetector(vectorAzul,"azul"));
+        //rubicCube.add(new ColorDetector(vectorAmarillo,"amarillo"));
+        //rubicCube.add(new ColorDetector(vectorCian,"cian"));
+        rubicCube.add(new ColorDetector(vectorMagenta,"magenta"));
+        //rubicCube.add(new ColorDetector(vectorNegro,"negro"));
+        //rubicCube.add(new ColorDetector(vectorBlanco,"blanco"));
         for (int i =0; i<src.rows();i++)
         {
-            for (int j=0;j<src.cols();i++)
+            for (int j=0;j<src.cols();j++)
             {
                 double menor = 100000;
                 String masParecido="";
@@ -63,13 +64,17 @@ public class ImageTreater {
                 {
                     if(evaluador.calcularDistEuclidiana(src.get(i,j))<menor)
                     {
-                        menor= evaluador.calcularDistEuclidiana(src.get(i,j));
-                        masParecido=evaluador.getEtiqueta();
+                        if(evaluador.getEtiqueta().equals("rojo")||evaluador.getEtiqueta().equals("magenta"))
+                        {
+                            menor= evaluador.calcularDistEuclidiana(src.get(i,j));
+                            masParecido=evaluador.getEtiqueta();
+
+                        }
                     }
                 }
                 for (int k=0; k<rubicCube.size();k++)
                 {
-                    if(rubicCube.get(k).getEtiqueta().equals(masParecido)&&!masParecido.equals("negro")&&!masParecido.equals("blanco"))
+                    if(rubicCube.get(k).getEtiqueta().equals(masParecido))
                     {
                         rubicCube.get(k).asignarPixel(src.get(i,j),i,j);
                     }
