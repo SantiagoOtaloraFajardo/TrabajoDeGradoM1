@@ -10,6 +10,7 @@ public class ColorDetector {
 
     public ColorDetector(double[] valorColor, String etiqueta) {
         pixelesAsignados=new ArrayList<>();
+        this.valorColor= new double[3];
         this.valorColor = valorColor;
         this.etiqueta=etiqueta;
         distEuclidiana = 0;

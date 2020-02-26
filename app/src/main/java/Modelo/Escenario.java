@@ -157,7 +157,7 @@ public class Escenario {
         Place p;
         Imgproc.cvtColor(src,bN, Imgproc.COLOR_RGB2GRAY);
         Mat rojos=Mat.zeros(src.size(), CvType.CV_8U);
-        rojos=ImageTreater.detectarColor(src,rojoLow,rojoHigh);
+        //rojos=ImageTreater.detectarColor(src,rojoLow,rojoHigh);
         Mat wLocMat = Mat.zeros(rojos.size(), rojos.channels());
         Core.findNonZero(rojos, wLocMat);
         Imgproc.adaptiveThreshold(bN, bN, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 30);

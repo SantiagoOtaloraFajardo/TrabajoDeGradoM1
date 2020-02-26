@@ -46,6 +46,7 @@ import java.lang.Math.*;
 import Modelo.Escenario;
 import TratamientoDeImagen.ColorDetector;
 import TratamientoDeImagen.ImageTreater;
+import TratamientoDeImagen.Pixel;
 
 import static org.opencv.imgproc.Imgproc.cvtColor;
 
@@ -205,12 +206,26 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 //Buscar donde encuentro colores primarios y antiprimarios (Negro y blanco no) y retornar el punto donde se encontraron
                     //Recibe Mat baseMat
                     //Retornar = ArrayList<Double[]>
+                /*
+                    1) la lista de pixeles encontrados contine los 3 colores primarios y los 3 colores antiprimarios
+                    2) la prueba es simplemente una Mat de fondo negro con el mismo tamaño y formato del baseMat
+                        2.1) La idea es colorear en este fondo negro los pixeles que se encontraron
+                        2.2) Por el momento estaria coloreando todo lo que se asemeje a: rojo, verde, azul, amarillo, magenta y cian
+                        2.3) La funcion de detectarColores siempre puede limitarse a contar; por ejemplo, los pixeles rojos y magentas
+                    3) La lista contiene entonces un conjunto de pixeles asignados. Estos, tienen los valores de su posicion en x,y y el valor de color
+                        3.1) De esta forma se puede pintar sobre otra mat usando la funcion "put"
+                 */
                 ArrayList<ColorDetector> pixelesDeColores=new ArrayList<ColorDetector>();
+                Mat pruebaColorDetector = Mat.zeros(baseMat.size(),CvType.CV_32SC3);
                 pixelesDeColores=ImageTreater.detectarColor(baseMat);
                 for(ColorDetector aux: pixelesDeColores)
                 {
-
+                    for(Pixel auxPixel: aux.getPixelesAsignados())
+                    {
+                        pruebaColorDetector.put(auxPixel.getX(),auxPixel.getY(),auxPixel.getValorPixel());
+                    }
                 }
+                evokeMat(pruebaColorDetector);
                 //Imgproc.adaptiveThreshold(bN, bN, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 30);
                 Imgproc.Canny(bN, bN, 80, 200, 3);
                 Mat mRgba= new Mat();

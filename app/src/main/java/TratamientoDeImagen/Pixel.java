@@ -10,4 +10,16 @@ public class Pixel {
         this.x = x;
         this.y = y;
     }
+
+    public double[] getValorPixel() {
+        return valorPixel;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }
