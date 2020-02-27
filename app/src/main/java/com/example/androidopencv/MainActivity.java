@@ -17,6 +17,9 @@ import android.os.Bundle;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import com.scanlibrary.ScanActivity;
+import com.scanlibrary.ScanConstants;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
@@ -132,10 +135,13 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         }
     }
 
-    //----------------------------UI methods:>
+    //----------------------------UI methods:> //rather stuff i've done
     //wrapper to invoke cam app
     Mat baseMat;
-    static final int REQ_NOOD=1, REQ_GALL = 2;
+
+    static final int REQ_NOOD=1, REQ_GALL = 2, REQ_CROP = 10;
+
+
     public void invokeCamera(View view){
         Intent sendNoodsInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(sendNoodsInt.resolveActivity(getPackageManager()) != null){
@@ -143,49 +149,66 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         }
     }
 
-    //doing thumbnail stuff for now, too sleppy
+    //doing thumbnail stuff for now, too sleepy
     @Override
     protected void onActivityResult( int REQ_COD, int RES_COD, Intent data ){
-        if ( REQ_COD == REQ_NOOD &&  RES_COD == RESULT_OK  ) {
-            Bundle extras = data.getExtras();
-            Bitmap picBM = (Bitmap) extras.get("data");
-            baseMat = new Mat(picBM.getHeight() , picBM.getWidth() , CvType.CV_32SC3);
-            Utils.bitmapToMat(picBM,baseMat);
-            cameraBridgeViewBase.enableView();
-            ImageView IV = findViewById(R.id.picZone);
-            IV.setImageBitmap(picBM);
+        ImageView IV = findViewById(R.id.picZone);
+
+        if (RES_COD == RESULT_OK) {
+
+            if (REQ_COD == REQ_NOOD) {
+                Bundle extras = data.getExtras();
+                Bitmap picBM = (Bitmap) extras.get("data");
+                baseMat = new Mat(picBM.getHeight(), picBM.getWidth(), CvType.CV_32SC3);
+                Utils.bitmapToMat(picBM, baseMat);
+                cameraBridgeViewBase.enableView();
+                IV.setImageBitmap(picBM);
 
 
-
-        }
-        if ( REQ_COD == REQ_GALL &&  RES_COD == RESULT_OK  ) {
-            Uri selectedImage = data.getData();
-            try {
-                //ImageDecoder.Source imgSrc = ImageDecoder.createSource(  getContentResolver() , selectedImage );
-                Bitmap gallBM = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-                //Bitmap gallBM = ImageDecoder.decodeBitmap(imgSrc );
-                ImageView IV = findViewById(R.id.picZone);
-
-                //IV.setImageBitmap(gallBM);
-
-                baseMat = new Mat();
-                Utils.bitmapToMat(gallBM ,baseMat );
-
-                String sceneName = getSceneName();
-                //------
-                // sceneName, recibe el texto del nombre
-                // baseMat, mat de la img cargada
-                // logData, string contiene el texto a mostrar
-                String logData = sceneName;
-
-                //-----------
-                logData += "opencv version :: "+ Core.getVersionString() ;
-                toOutViewLog( logData );
-                evokeMat(baseMat);
+            }
+            if (REQ_COD == REQ_GALL) {
+                Uri selectedImage = data.getData();
+                try {
+                    //ImageDecoder.Source imgSrc = ImageDecoder.createSource(  getContentResolver() , selectedImage );
+                    Bitmap gallBM = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                    //Bitmap gallBM = ImageDecoder.decodeBitmap(imgSrc );
 
 
-            } catch (IOException e) {
-                Log.i("TAG", "Some exception " + e);
+                    //IV.setImageBitmap(gallBM);
+
+                    baseMat = new Mat();
+                    Utils.bitmapToMat(gallBM, baseMat);
+
+                    //------
+                    // sceneName, recibe el texto del nombre
+                    // baseMat, mat de la img cargada
+                    // logData, string con texto a mostrar
+                    String sceneName = getSceneName();
+                    String logData = sceneName;
+
+                    //-----------
+                    logData += "opencv version :: " + Core.getVersionString();
+                    toOutViewLog(logData);
+                    evokeMat(baseMat);
+
+
+                } catch (IOException e) {
+                    Log.i("TAG", "Some exception " + e);
+                }
+            }
+            if (REQ_COD == REQ_CROP){
+                Uri uri = data.getExtras().getParcelable(ScanConstants.SCANNED_RESULT);
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+
+                    getContentResolver().delete(uri, null, null);
+                    IV.setImageBitmap(bitmap);
+                    baseMat = new Mat();
+                    Utils.bitmapToMat(bitmap,baseMat);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -215,9 +238,24 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     }
 
+
+
     public String getSceneName(){
         TextView nameView = findViewById( R.id.nameInp );
         return nameView.getText().toString();
     }
 
+    public void testBtnMethod(View v){
+        Toast.makeText (this,"shiny",Toast.LENGTH_SHORT  );
+        Intent openTestAct = new Intent( this, testActiv.class );
+        startActivity(openTestAct);
+
+    }
+
+    public void invokeCrop(View view){
+        Intent cropIntent = new Intent(this, ScanActivity.class );
+        cropIntent.putExtra(ScanConstants.OPEN_INTENT_PREFERENCE, ScanConstants.OPEN_MEDIA);
+        startActivityForResult(cropIntent, REQ_CROP);
+
+    }
 }

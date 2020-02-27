@@ -7,6 +7,53 @@
     tools:context=".MainActivity">
 
 
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/buttonCam"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_weight="5"
+                android:onClick="invokeCamera"
+                android:text="@string/takePic" />
+
+            <Button
+                android:id="@+id/buttonGall"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_weight="5"
+                android:onClick="invokeGallery"
+                android:text="@string/loadPc" />
+
+            <Button
+                android:id="@+id/buttonCrop"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_weight="5"
+                android:onClick="invokeCrop"
+                android:text="@string/cropPic" />
+
+            <Button
+                android:id="@+id/buttonTest"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_weight="5"
+                android:onClick="testBtnMethod"
+                android:text="@string/btnTest" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
     <org.opencv.android.JavaCameraView
         android:id="@+id/CameraView"
         android:layout_width="409dp"
@@ -19,31 +66,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="204dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="52dp"
-        android:onClick="invokeGallery"
-        android:text="@string/loadPc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="204dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="52dp"
-        android:onClick="invokeCamera"
-        android:text="@string/takePic"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/picZone"
@@ -74,14 +96,14 @@
         android:id="@+id/nameInp"
         android:layout_width="409dp"
         android:layout_height="65dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="1dp"
         android:contentDescription="Scene name"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

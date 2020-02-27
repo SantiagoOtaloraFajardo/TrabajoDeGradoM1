@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">AndroidOpenCV</string>
     <string name="takePic">Camera</string>
-    <string name="loadPc">load pic</string>
+    <string name="loadPc">Load pic</string>
+    <string name="title_activity_test">testActiv</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="ftsot">FTSOT</string>
+    <string name="btnTest">testBtn (act swap)</string>
+    <string name="cropPic">Load pic +</string>
 </resources>
