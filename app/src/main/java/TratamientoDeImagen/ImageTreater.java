@@ -47,40 +47,23 @@ public class ImageTreater {
         double[] vectorNegro={0,0,0};
         double[] vectorBlanco={255,255,255};
         rubicCube.add(new ColorDetector(vectorRojo,"rojo"));
-        //rubicCube.add(new ColorDetector(vectorVerde,"verde"));
-        //rubicCube.add(new ColorDetector(vectorAzul,"azul"));
-        //rubicCube.add(new ColorDetector(vectorAmarillo,"amarillo"));
-        //rubicCube.add(new ColorDetector(vectorCian,"cian"));
+        rubicCube.add(new ColorDetector(vectorVerde,"verde"));
+        rubicCube.add(new ColorDetector(vectorAzul,"azul"));
+        rubicCube.add(new ColorDetector(vectorAmarillo,"amarillo"));
+        rubicCube.add(new ColorDetector(vectorCian,"cian"));
         rubicCube.add(new ColorDetector(vectorMagenta,"magenta"));
-        //rubicCube.add(new ColorDetector(vectorNegro,"negro"));
-        //rubicCube.add(new ColorDetector(vectorBlanco,"blanco"));
-        for (int i =0; i<src.rows();i++)
-        {
-            for (int j=0;j<src.cols();j++)
-            {
-                double menor = 100000;
-                String masParecido="";
-                for(ColorDetector evaluador:rubicCube)
-                {
-                    if(evaluador.calcularDistEuclidiana(src.get(i,j))<menor)
-                    {
-                        if(evaluador.getEtiqueta().equals("rojo")||evaluador.getEtiqueta().equals("magenta"))
-                        {
-                            menor= evaluador.calcularDistEuclidiana(src.get(i,j));
-                            masParecido=evaluador.getEtiqueta();
-
-                        }
-                    }
-                }
-                for (int k=0; k<rubicCube.size();k++)
-                {
-                    if(rubicCube.get(k).getEtiqueta().equals(masParecido))
-                    {
-                        rubicCube.get(k).asignarPixel(src.get(i,j),i,j);
-                    }
-                }
-            }
-        }
+        rubicCube.add(new ColorDetector(vectorNegro,"negro"));
+        rubicCube.add(new ColorDetector(vectorBlanco,"blanco"));
+        ColorDetectorThread cuadrante1 = new ColorDetectorThread(rubicCube,0,0,src.rows()/2,src.cols()/2,src);
+        ColorDetectorThread cuadrante2 = new ColorDetectorThread(rubicCube,src.rows()/2,0,src.rows(),src.cols()/2,src);
+        ColorDetectorThread cuadrante3 = new ColorDetectorThread(rubicCube,0,src.cols()/2,src.rows()/2,src.cols(),src);
+        ColorDetectorThread cuadrante4 = new ColorDetectorThread(rubicCube,src.rows()/2,src.cols()/2,src.rows(),src.cols(),src);
+        cuadrante1.start();
+        cuadrante2.start();
+        cuadrante3.start();
+        cuadrante4.start();
+        //while(cuadrante1.isAlive()||cuadrante2.isAlive()||cuadrante3.isAlive()||cuadrante4.isAlive());
+        Log.v("final","Termine de leer el Mat");
         return rubicCube;
     }
     public static Mat segmentarVisajes(Mat frame) {

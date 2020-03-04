@@ -196,7 +196,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 String logData = sceneName;
 
                 //-----------
-
                 Utils.bitmapToMat(gallBM ,baseMat );
                 Escenario escenario = new Escenario(sceneName);
                 //escenario.detectarPlace(baseMat);
@@ -217,12 +216,12 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                  */
                 ArrayList<ColorDetector> pixelesDeColores;
                 Mat pruebaColorDetector = Mat.zeros(baseMat.size(),CvType.CV_32SC3);
-                pixelesDeColores=ImageTreater.detectarColor(pruebaColorDetector);
+                pixelesDeColores=ImageTreater.detectarColor(baseMat);
                 for(ColorDetector aux: pixelesDeColores)
                 {
                     for(Pixel auxPixel: aux.getPixelesAsignados())
                     {
-                        Log.d("pixel",auxPixel.toString());
+                        Log.v("pixel",auxPixel.toString());
                         pruebaColorDetector.put(auxPixel.getX(),auxPixel.getY(),auxPixel.getValorPixel());
                     }
                 }

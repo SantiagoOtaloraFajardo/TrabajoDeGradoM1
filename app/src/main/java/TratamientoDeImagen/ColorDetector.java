@@ -32,8 +32,6 @@ public class ColorDetector {
     }
 
     public double calcularDistEuclidiana(double[] valorColorSrc) {
-        Log.d("TamañovalorColor:",""+valorColor.length);
-        Log.d("TamañovalorColorSrc:","" + valorColorSrc.length);
         distEuclidiana=Math.sqrt(Math.pow((valorColor[0]-valorColorSrc[0]),2)+Math.pow((valorColor[1]-valorColorSrc[1]),2)+Math.pow((valorColor[2]-valorColorSrc[2]),2));
         return distEuclidiana;
     }
