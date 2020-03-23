@@ -246,9 +246,13 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     }
 
     public void testBtnMethod(View v){
+
         Toast.makeText (this,"shiny",Toast.LENGTH_SHORT  );
+
         Intent openTestAct = new Intent( this, testActiv.class );
+
         startActivity(openTestAct);
+        //startActivityForResult(<intent>);
 
     }
 
